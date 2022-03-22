@@ -1,0 +1,1 @@
+python train.py --n-labeled 1000 --out mnist@1000new --dataset 'mnist'
