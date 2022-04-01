@@ -11,7 +11,7 @@ information theory, attacks, defenses
 
 ## Description of the code
 
-The `main.py` file contains the skeleton our code uses. Note that this project was built on a repository for a seperate function and so there are some extra functions in this file we do not use. `main_model_extraction.py` is the main file used to run model extraction attacks and measure the relevant cost metrics. It is called from the `main.py` code. Default parameters used in the code
+The `main.py` file contains the skeleton our code uses. `main_model_extraction.py` is the main file used to run model extraction attacks and measure the relevant cost metrics. It is called from the `main.py` code. Default parameters used in the code
 are in the `parameters.py` file. For the CIFAR10 and SVHN victim models, we use the models from the Data Free Model Extraction repository (https://github.com/cake-lab/datafree-model-extraction). For MNIST, we use the MnistNet Architecture on which we can train a model locally using the script `experiments/train.sh`.  
 
 ### Examples of the pipeline:
@@ -30,14 +30,13 @@ The output logs containing the costs and the accuracies reached are saved in the
 
 2. MixMatch:
 
-The code for MixMatch can be found in the `MixMatch-pytorch` folder. This code has been adapted for our needs from a publicly available repository at https://github.com/YU1ut/MixMatch-pytorch. The output logs are saved as a subfolder. Sample scripts to run the extraction   
+The code for MixMatch can be found in the `MixMatch-pytorch` folder. This code has been adapted for our needs from a publicly available repository at https://github.com/YU1ut/MixMatch-pytorch. A sample script to run this code for the MNIST dataset can be found in the folder.     
 
 
 
 3. Data Free Model Extraction
 
-The code to run this along with example scripts are located in the folder `dfme`. This code has been adapted from the official github repository of the paper (https://arxiv.org/abs/2011.14779, https://github.com/cake-lab/datafree-model-extraction). 
-The output logs are also saved as a subfolder. 
+The code to run this along with example scripts are located in the folder `dfme`. This code has been adapted from the official github repository of the paper (https://arxiv.org/abs/2011.14779, https://github.com/cake-lab/datafree-model-extraction). Sample scripts to run this attack can for the MNIST or CIFAR10 datasets can be found at `dfme/dfme/mnisttest.sh` and `dfme/dfme/cifartest.sh` respectively.   
 
 
 4. Knockoff Nets from ART 

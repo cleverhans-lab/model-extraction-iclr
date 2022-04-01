@@ -25,7 +25,7 @@ if __name__ == "__main__":
 
     knockoff = TestKnockoffNets(
         train=train,
-        random=True,
+        random=False,
         adaptive=True,
         dataset=args.dataset,
         load_init=load_init,
