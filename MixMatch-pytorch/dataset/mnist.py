@@ -14,11 +14,6 @@ class TransformTwice:
         out2 = self.transform(inp)
         return out1, out2
 
-# Might have to convert data to rgb :
-#transforms.Lambda(lambda x: x.repeat(3, 1, 1) )
-#Otherwise may have to change the model to MnistNEtPAte (probably simpler)
-
-
 
 def get_mnist(root, n_labeled,
                 transform_train=None, transform_val=None,
@@ -59,21 +54,6 @@ def train_val_split(labels, n_labeled_per_class):
     train_labeled_idxs.extend(idxs[:n_labeled])
     train_unlabeled_idxs.extend(idxs[n_labeled: -1000])
     val_idxs.extend(idxs[-1000:])
-    ent = 0
-    gap = 0
-    temp1 = np.load("mnistent.npy")
-    temp2 = np.load("mnistgap.npy")
-    for i in train_labeled_idxs:
-        ent += temp1[i]
-        gap += temp2[i]
-    # pknn = 0
-    total = n_labeled_per_class * 10
-    file = f"mnist@{total}new/stats.txt"
-    f = open(file, "w")
-    f.write("Entropy: " + str(ent) + "\n")
-    f.write("Gap: " + str(gap) + "\n")
-    f.close()
-
 
     np.random.shuffle(train_labeled_idxs)
     np.random.shuffle(train_unlabeled_idxs)
@@ -217,16 +197,6 @@ class MNIST_labeledmod(torchvision.datasets.MNIST):
         super(MNIST_labeledmod, self).__init__(root, train=train,
                  transform=transform, target_transform=target_transform,
                  download=download)
-        if indexs is not None:
-            self.data = self.data[indexs]
-            #victim = load_private_model_by_id()
-            # temp = []
-            # for i in indexs:
-            #self.targets = victim(self.data)
-            # Use model predictions here?
-            targets = np.load("mnisttargets.npy")
-            self.targets = np.array(targets)[indexs]
-            #print("targets", self.targets)
         self.data = normalise(self.data)
 
     def __getitem__(self, index):

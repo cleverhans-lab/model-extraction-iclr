@@ -36,11 +36,6 @@ def train_val_split(labels, n_labeled_per_class, write=True):
     train_labeled_idxs = []
     train_unlabeled_idxs = []
     val_idxs = []
-    ent = 0
-    gap = 0
-    temp1 = np.load("svhnent.npy")
-    temp2 = np.load("svhngap.npy")
-    #pknn = 0
     total = n_labeled_per_class*10
     # To get an equal number of samples per class.
     # for i in range(10):
@@ -57,15 +52,6 @@ def train_val_split(labels, n_labeled_per_class, write=True):
     train_labeled_idxs.extend(idxs[:n_labeled])
     train_unlabeled_idxs.extend(idxs[n_labeled: -1000]) # was 500
     val_idxs.extend(idxs[-1000:])
-    if write == True:
-        for i in train_labeled_idxs:
-            ent += temp1[i]
-            gap += temp2[i]
-        file = f"svhn@{total}new/stats.txt"
-        f = open(file, "w")
-        f.write("Entropy: " + str(ent) + "\n")
-        f.write("Gap: " + str(gap) + "\n")
-        f.close()
     np.random.shuffle(train_labeled_idxs)
     np.random.shuffle(train_unlabeled_idxs)
     np.random.shuffle(val_idxs)
@@ -193,20 +179,6 @@ class SVHN_labeledmod(torchvision.datasets.SVHN):
         super(SVHN_labeledmod, self).__init__(root,  split='train' if train == True else 'test',
                  transform=transform, target_transform=target_transform,
                  download=download)
-        # print(type(self.data))
-        # print(self.data.shape)
-        # print(type(self.data[0]))
-        # print(self.data[0].shape)
-        if indexs is not None:
-            self.data = self.data[indexs]
-            #victim = load_private_model_by_id()
-            # temp = []
-            # for i in indexs:
-            #self.targets = victim(self.data)
-            # Use model predictions here?
-            targets = np.load("svhntargets.npy")
-            self.targets = np.array(targets)[indexs]
-            #print(self.targets)
         self.data = transpose(normalise(self.data))
 
     def __getitem__(self, index):

@@ -532,7 +532,6 @@ def validate(valloader, model, criterion, epoch, use_cuda, mode):
 def fidelity(valloader, model, dataset , use_cuda, val_idxs,):
     model.eval()
 
-    end = time.time()
     i = 0
     actual = np.load(f"{dataset}targets.npy")
     count = 0
@@ -544,10 +543,6 @@ def fidelity(valloader, model, dataset , use_cuda, val_idxs,):
             outputs = model(inputs)
             _, pred1 = outputs.topk(1, 1, True, True)
             if batch_idx in val_idxs:
-                #output = outputs.argmax().item()
-                print("outputs", pred1)
-                #print("outputs", output)
-                print("actual", actual[i])
                 if pred1 == actual[i]:
                     count = count + 1
                 i += 1
